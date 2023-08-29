@@ -4,24 +4,29 @@ import GoogleIcon from "@/icons/GoogleIcon";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { signIn } from "next-auth/react";
-import Image from "next/image";
 
-type Props = {};
-
-const SignIn = (props: Props) => {
+const SignIn = () => {
   const handleSignIn = async () => {
     signIn("github", { callbackUrl: "http://localhost:3000" });
   };
 
   return (
-    <Box height="100vh" padding={12} bgcolor={grey["200"]}>
+    <Box
+      height="100vh"
+      padding={{
+        xs: 4,
+        md: 12,
+      }}
+      bgcolor={grey["200"]}
+    >
       <Grid container direction="row" bgcolor="white" height="100%">
-        <Grid item container xs={6} padding={4} justifyContent="center">
+        <Grid item container xs={12} md={6} justifyContent="center">
           <Stack spacing={2} justifyContent="center">
             <Typography fontSize="24px" fontWeight={700} textAlign="center">
               Welcome back, Insightful
             </Typography>
             <Button
+              onClick={handleSignIn}
               sx={{
                 color: "black",
                 textTransform: "none",
@@ -37,7 +42,8 @@ const SignIn = (props: Props) => {
         </Grid>
         <Grid
           item
-          xs={6}
+          xs={12}
+          md={6}
           bgcolor="white"
           sx={{
             backgroundImage: "url(/assets/images/reads-cover.jpg)",
