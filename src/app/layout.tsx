@@ -17,7 +17,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <body>
         <MUIThemeProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            </AuthProvider>
         </MUIThemeProvider>
       </body>
     </html>

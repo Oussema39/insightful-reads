@@ -9,7 +9,7 @@ export const authOptions: NextAuthOptions = {
       name: "github",
     }),
   ],
-  //   pages: {
-  //     signIn: "/",
-  //   },
+  pages : {
+    signIn : '/auth/signin'
+  }
 };
