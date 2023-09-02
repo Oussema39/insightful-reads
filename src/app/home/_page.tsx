@@ -1,36 +1,29 @@
-import Image from "next/image";
-
-type User =
-  | {
-      name?: string | null | undefined;
-      email?: string | null | undefined;
-      image?: string | null | undefined;
-    }
-  | undefined;
+import ArticleCard from "@/components/ArticleCard";
+import Navbar from "@/components/Navbar";
+import Bull from "@/components/custom/Bull";
+import { User } from "@/interface/User";
+import { getArticles } from "@/lib/getArticles";
+import { Box, Container, Grid } from "@mui/material";
 
 type HomeProps = {
-  user: User;
+  user: User | undefined;
 };
 
-const Home = ({ user }: HomeProps) => {
-  const userImage = user?.image ? (
-    <Image
-      src={user?.image}
-      width={100}
-      height={100}
-      alt={user?.name ?? "Profile Pic"}
-      priority={true}
-      style={{ display: "block" }}
-    />
-  ) : null;
-
+const Home = async ({ user }: HomeProps) => {
+  const articles = await getArticles();
   return (
-    <div>
-      <h1 style={{ display: "inline" }}>
-        Welcome home {user?.name}
-        {userImage}
-      </h1>
-    </div>
+    <Box>
+      <Navbar />
+      <Container maxWidth="md" sx={{ pt: 6 }}>
+        <Grid justifyContent="center" gap={1} container>
+          {articles.map((article) => (
+            <Grid key={article.title} item xs={4}>
+              <ArticleCard article={article} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 
