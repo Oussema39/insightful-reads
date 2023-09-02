@@ -17,7 +17,7 @@ const Home = async ({ user }: HomeProps) => {
       <Container maxWidth="md" sx={{ pt: 6 }}>
         <Grid justifyContent="center" gap={1} container>
           {articles.map((article) => (
-            <Grid key={article.title} item xs={4}>
+            <Grid key={article.title} item xs={12} md={6}>
               <ArticleCard article={article} />
             </Grid>
           ))}
