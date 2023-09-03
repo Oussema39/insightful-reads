@@ -1,5 +1,6 @@
+"use client";
 import { Article } from "@/interface/Article";
-import { formatDate } from "@/utils/helpers";
+import { formatDate, generateCssRGBA, getContrastColor } from "@/utils/helpers";
 import {
   Avatar,
   Box,
@@ -10,36 +11,57 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React from "react";
-import Text from "./custom/Text";
+import React, { useEffect, useRef, useState } from "react";
+import ColorThief from "colorthief";
 
 type ArticleCardProps = {
   article: Article;
 };
 
 const ArticleCard = ({
-  article: { title, description, author, publishedAt, content },
+  article: { title, author, publishedAt, content, imgUrl },
 }: ArticleCardProps) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgDominantColor, setImgDominantColor] = useState<RGB | null>(null);
+
+  const handleOnLoad = () => {
+    const colorThief = new ColorThief();
+    const img = imgRef.current;
+    const result = colorThief.getColor(img, 25);
+    setImgDominantColor(result);
+  };
+
   return (
-    <Card sx={{ boxShadow: "none", border: `0.5px solid ${grey["200"]}` }}>
+    <Card
+      sx={{
+        bgcolor: generateCssRGBA(imgDominantColor),
+        boxShadow: "none",
+        border: `0.5px solid ${grey["200"]}`,
+      }}
+    >
       <CardMedia
+        crossOrigin="anonymous"
+        ref={imgRef}
+        src={imgUrl ?? "/assets/images/reads-cover.jpg"}
+        alt="card-media"
+        onLoad={handleOnLoad}
         component="img"
         height={200}
-        src="/assets/images/reads-cover.jpg"
-        alt="card-media"
       />
       <CardContent>
-        <Typography variant="body1" fontWeight={700} fontSize="22px">
+        <Typography
+          variant="body1"
+          fontWeight={700}
+          fontSize="22px"
+          color={getContrastColor(imgDominantColor)}
+        >
           {title}
         </Typography>
-        {/* <Text variant="subtitle1" color="GrayText" fontSize="14px">
-            {content}
-          </Text> */}
-        {/* <Box maxHeight="3rem" overflow="hidden"> */}
+
         <Typography
           maxWidth="100%"
           variant="subtitle1"
-          color="GrayText"
+          color={getContrastColor(imgDominantColor)}
           whiteSpace="nowrap"
           fontSize="14px"
           overflow="hidden"
@@ -50,10 +72,17 @@ const ArticleCard = ({
         {/* </Box> */}
 
         <Stack mt={4} direction="column">
-          <Typography fontWeight={700} fontSize="14px">
+          <Typography
+            fontWeight={700}
+            fontSize="14px"
+            color={getContrastColor(imgDominantColor)}
+          >
             by {author?.name}
           </Typography>
-          <Typography color="GrayText" fontSize="12px">
+          <Typography
+            fontSize="12px"
+            color={getContrastColor(imgDominantColor)}
+          >
             {formatDate(publishedAt)}
           </Typography>
           <Avatar sx={{ bgcolor: "lightblue", mt: 2 }}>

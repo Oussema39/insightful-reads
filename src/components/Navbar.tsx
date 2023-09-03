@@ -8,49 +8,47 @@ type Props = {};
 
 const Navbar = (props: Props) => {
   return (
-    <nav>
-      <AppBar
-        position="static"
-        sx={{
-          background: "white",
-          boxShadow: "none",
-          borderBottom: `1px solid ${grey["200"]}`,
-        }}
+    <AppBar
+      position="static"
+      sx={{
+        background: "white",
+        boxShadow: "none",
+        borderBottom: `1px solid ${grey["200"]}`,
+      }}
+    >
+      <Container
+        sx={{ py: 0.75, display: "flex", justifyContent: "space-between" }}
       >
-        <Container
-          sx={{ py: 0.75, display: "flex", justifyContent: "space-between" }}
+        <Box
+          sx={{
+            userSelect: "none",
+            alignItems: "center",
+            display: "flex",
+            gap: 1,
+          }}
         >
-          <Box
+          <Image
+            src="/assets/images/logo.png"
+            alt="logo"
+            width={16}
+            height={16}
+          />
+          <Typography
+            variant="h6"
             sx={{
-              userSelect: "none",
-              alignItems: "center",
-              display: "flex",
-              gap: 1,
+              fontFamily: "monospace",
+              fontWeight: 600,
+              letterSpacing: ".175rem",
             }}
           >
-            <Image
-              src="/assets/images/logo.png"
-              alt="logo"
-              width={16}
-              height={16}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                fontFamily: "monospace",
-                fontWeight: 600,
-                letterSpacing: ".175rem",
-              }}
-            >
-              READS
-            </Typography>
-          </Box>
-          <Box>
-            <UserAvatar />
-          </Box>
-        </Container>
-      </AppBar>
-    </nav>
+            READS
+          </Typography>
+        </Box>
+        <Box>
+          <UserAvatar />
+        </Box>
+      </Container>
+    </AppBar>
   );
 };
 
