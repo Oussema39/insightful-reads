@@ -1,10 +1,13 @@
 import { Article } from "@/interface/Article";
 import { articles } from "@/utils/dummyArticles";
 
-export const getArticles = (): Promise<Article[]> => {
+export const getArticleById = (
+  articleId: number
+): Promise<Article | undefined> => {
   return new Promise((res) => {
     setTimeout(() => {
-      res(articles);
+      const article = articles.find(({ id }) => id === articleId);
+      res(article);
     }, 2000);
   });
 };

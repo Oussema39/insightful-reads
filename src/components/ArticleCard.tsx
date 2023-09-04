@@ -3,7 +3,6 @@ import { Article } from "@/interface/Article";
 import { formatDate, generateCssRGBA, getContrastColor } from "@/utils/helpers";
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   CardMedia,
@@ -11,15 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ColorThief from "colorthief";
 
 type ArticleCardProps = {
-  article: Article;
+  article: Omit<Article, "id">;
 };
 
 const ArticleCard = ({
-  article: { title, author, publishedAt, content, imgUrl },
+  article: { title, author, publishedAt, description, imgUrl },
 }: ArticleCardProps) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgDominantColor, setImgDominantColor] = useState<RGB | null>(null);
@@ -37,6 +36,7 @@ const ArticleCard = ({
         bgcolor: generateCssRGBA(imgDominantColor),
         boxShadow: "none",
         border: `0.5px solid ${grey["200"]}`,
+        color: getContrastColor(imgDominantColor),
       }}
     >
       <CardMedia
@@ -49,43 +49,34 @@ const ArticleCard = ({
         height={200}
       />
       <CardContent>
-        <Typography
-          variant="body1"
-          fontWeight={700}
-          fontSize="22px"
-          color={getContrastColor(imgDominantColor)}
-        >
+        <Typography variant="body1" fontWeight={700} fontSize="22px">
           {title}
         </Typography>
 
         <Typography
           maxWidth="100%"
           variant="subtitle1"
-          color={getContrastColor(imgDominantColor)}
           whiteSpace="nowrap"
           fontSize="14px"
           overflow="hidden"
           textOverflow="ellipsis"
         >
-          {content}
+          {description}
         </Typography>
         {/* </Box> */}
 
         <Stack mt={4} direction="column">
-          <Typography
-            fontWeight={700}
-            fontSize="14px"
-            color={getContrastColor(imgDominantColor)}
-          >
+          <Typography fontWeight={700} fontSize="14px">
             by {author?.name}
           </Typography>
-          <Typography
-            fontSize="12px"
-            color={getContrastColor(imgDominantColor)}
+          <Typography fontSize="12px">{formatDate(publishedAt)}</Typography>
+          <Avatar
+            sx={{
+              background: getContrastColor(imgDominantColor),
+              color: generateCssRGBA(imgDominantColor),
+              mt: 2,
+            }}
           >
-            {formatDate(publishedAt)}
-          </Typography>
-          <Avatar sx={{ bgcolor: "lightblue", mt: 2 }}>
             {author?.name.at(0)}
           </Avatar>
         </Stack>

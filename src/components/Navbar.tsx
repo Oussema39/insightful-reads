@@ -1,14 +1,13 @@
-import { AppBar, Avatar, Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Image from "next/image";
 import React from "react";
 import UserAvatar from "./UserAvatar";
+import Link from "next/link";
 
-type Props = {};
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   return (
-    <AppBar
+    <Box
       position="static"
       sx={{
         background: "white",
@@ -19,36 +18,38 @@ const Navbar = (props: Props) => {
       <Container
         sx={{ py: 0.75, display: "flex", justifyContent: "space-between" }}
       >
-        <Box
-          sx={{
-            userSelect: "none",
-            alignItems: "center",
-            display: "flex",
-            gap: 1,
-          }}
-        >
-          <Image
-            src="/assets/images/logo.png"
-            alt="logo"
-            width={16}
-            height={16}
-          />
-          <Typography
-            variant="h6"
+        <Link href="/">
+          <Box
             sx={{
-              fontFamily: "monospace",
-              fontWeight: 600,
-              letterSpacing: ".175rem",
+              userSelect: "none",
+              alignItems: "center",
+              display: "flex",
+              gap: 1,
             }}
           >
-            READS
-          </Typography>
-        </Box>
+            <Image
+              src="/assets/images/logo.png"
+              alt="logo"
+              width={16}
+              height={16}
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: "monospace",
+                fontWeight: 600,
+                letterSpacing: ".175rem",
+              }}
+            >
+              READS
+            </Typography>
+          </Box>
+        </Link>
         <Box>
           <UserAvatar />
         </Box>
       </Container>
-    </AppBar>
+    </Box>
   );
 };
 
