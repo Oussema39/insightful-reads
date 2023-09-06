@@ -8,12 +8,15 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <Box
-      position="static"
+      position="fixed"
+      width="100%"
       sx={{
-        background: "white",
+        background: "transparent",
+        backdropFilter: "blur(5px)",
         boxShadow: "none",
         borderBottom: `1px solid ${grey["200"]}`,
       }}
+      zIndex="1"
     >
       <Container
         sx={{ py: 0.75, display: "flex", justifyContent: "space-between" }}

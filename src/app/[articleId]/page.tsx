@@ -4,6 +4,7 @@ import { grey } from "@mui/material/colors";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import React from "react";
+import ImageNotSupportedOutlinedIcon from "@mui/icons-material/ImageNotSupportedOutlined";
 
 type ArticleDetailsProps = {
   params: { articleId: number };
@@ -16,14 +17,19 @@ const ArticleDetails = async ({
   if (!article) notFound();
 
   return (
-    <Container sx={{ pt: 6 }} maxWidth="md">
+    <Container sx={{ pt: 12 }} maxWidth="md">
       <Box height="50vh" position="relative" mb={4}>
-        <Image
-          src={article.imgUrl ?? ""}
-          alt="article-photo"
-          fill
-          objectFit="cover"
-        />
+        {article.imgUrl ? (
+          <Image
+            src={article.imgUrl}
+            alt="article-photo"
+            fill
+            objectFit="cover"
+          />
+        ) : (
+          // TODO : implement image preview when image url is invalid
+          <ImageNotSupportedOutlinedIcon />
+        )}
       </Box>
       <Typography
         component="h2"
